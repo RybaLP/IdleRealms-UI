@@ -29,7 +29,8 @@ export default function Home() {
             className="px-12 py-4 bg-linear-to-b from-amber-500 to-amber-700 text-white font-bold rounded-md border-b-4 border-amber-900 hover:brightness-125 hover:scale-105 active:border-b-0 active:translate-y-1 transition-all duration-200 uppercase tracking-wider min-w-[200px] text-center shadow-lg shadow-amber-900/20">
             Register
           </Link>
+          
         </div>
     </main>
   );
-}
+} 
