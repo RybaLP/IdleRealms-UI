@@ -1,0 +1,1 @@
+export type HeroClass = `WARRIOR` | `MAGE` | `SCOUT`;
