@@ -3,6 +3,7 @@ import CreateCharacterPanel from "./components/characterCreator/createCharacterP
 import CharacterAvatar from "../components/shared/characterAvatar"
 import RegisterForm from "./components/registerForm"
 import AppearanceCustomizer from "./components/characterCreator/appearanceCustomizer"
+import CreateButton from "./components/createButton"
 
 const Page = () => {
   return (
@@ -34,18 +35,7 @@ const Page = () => {
       </div>
 
       <div className="absolute bottom-8 left-0 w-full flex justify-center z-30">
-        <button className="
-          min-w-85 py-4
-          bg-linear-to-b from-[#ff9d00] to-[#cc7a00] 
-          border-[3px] border-[#1a2b3c]
-          text-[#0a0a0a] font-[900] text-2xl uppercase tracking-tighter
-          shadow-[0_0_30px_rgba(0,0,0,0.7),inset_0_2px_2px_rgba(255,255,255,0.4)]
-          hover:from-[#ffb333] hover:to-[#e68a00]
-          hover:scale-105 active:scale-95 transition-all
-          rounded-sm
-        ">
-          Create Character
-        </button>
+        <CreateButton/>
       </div>
 
     </main>
