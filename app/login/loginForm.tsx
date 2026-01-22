@@ -3,10 +3,14 @@
 import { useState, useCallback } from "react";
 import { LoginRequest } from "../types/auth/loginRequest";
 import { loginUser } from "../services/authService";
+import { useRouter } from "next/navigation";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const LoginForm = () => {
+
+    const router = useRouter();
+
     const [formData, setFormData] = useState<LoginRequest>({
         email: "",
         password: "",
@@ -51,7 +55,7 @@ const LoginForm = () => {
 
         try {
             await loginUser(formData);
-
+            router.push("/realm");
             alert("✅ Logged in successfully!");
         } catch (err: any) {
             setError(err?.message ?? "Something went wrong");
