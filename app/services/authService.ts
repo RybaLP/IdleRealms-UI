@@ -1,3 +1,4 @@
+// src/services/authService.ts
 import { RegisterState } from "../store/registerSlice";
 import { LoginRequest } from "../types/auth/loginRequest";
 import { RegisterResponse } from "../types/auth/registerResponse";
@@ -5,7 +6,7 @@ import { RegisterResponse } from "../types/auth/registerResponse";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
 
 export const registerCharacter = async (data: RegisterState): Promise<RegisterResponse> => {
-  const response = await fetch(apiUrl + "/api/register" , {
+  const response = await fetch(apiUrl + "/api/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -32,25 +33,38 @@ export const registerCharacter = async (data: RegisterState): Promise<RegisterRe
   return response.json();
 };
 
-export const loginUser = async (data : LoginRequest) => {
-  const response = await fetch(apiUrl + "/api/login", {
-    method : "POST",
-    headers : { "Content-Type": "application/json" },
-    credentials : "include",
-    body : JSON.stringify ({
-      email : data.email,
-      password : data.password
-    })
-  })
-  if (!response.ok) {
-    let errorMessage = "Login failed";
-    try {
-      const errorData = await response.json();
-      errorMessage = errorData.message || errorMessage;
-    } catch (e) {
-      errorMessage = `Invalid credentials or server error: ${response.status}`;
+export const loginUser = async (data: LoginRequest) => {
+  try {
+    const response = await fetch(apiUrl + "/api/login", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json" 
+      },
+      credentials: "include", 
+      body: JSON.stringify({
+        email: data.email,
+        password: data.password
+      })
+    });
+
+    if (!response.ok) {
+      let errorMessage = "Login failed";
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.message || errorMessage;
+      } catch (e) {
+        if (response.status === 401) errorMessage = "Invalid email or password";
+        else errorMessage = `Server error: ${response.status}`;
+      }
+      throw new Error(errorMessage);
     }
-    throw new Error(errorMessage);
+
+    return await response.text();
+
+  } catch (error: any) {
+    if (error.message === "Failed to fetch") {
+      throw new Error("Session conflict: Please clear your browser cookies and try again.");
+    }
+    throw error;
   }
-  return response.text();
-}
+};
