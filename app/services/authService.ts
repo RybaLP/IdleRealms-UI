@@ -68,3 +68,20 @@ export const loginUser = async (data: LoginRequest) => {
     throw error;
   }
 };
+
+export const logoutUser = async () : Promise<void> => {
+
+  try {
+    const res = await fetch (apiUrl + "/api/logout" , {
+      method : "POST",
+      credentials : "include"
+    });
+
+    if (!res.ok) {
+      throw new Error ("Logout failed on server")
+    }
+    
+  } catch (error) {
+    throw error;
+  }
+}
