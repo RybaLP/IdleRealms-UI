@@ -3,6 +3,7 @@
 import Sidebar from "../components/shared/sidebar";
 import { useGetHeroInfo } from "../hooks/useGetHeroInfo";
 import { Providers } from "../redux/reduxProvider";
+import QueryProvider from "../providers/queryProvider";
 
 export default function RealmLayout({
   children,
@@ -10,9 +11,11 @@ export default function RealmLayout({
   children: React.ReactNode;
 }) {
   return (
+    <QueryProvider>
     <Providers>
       <RealmContent>{children}</RealmContent>
     </Providers>
+    </QueryProvider>
   );
 }
 
