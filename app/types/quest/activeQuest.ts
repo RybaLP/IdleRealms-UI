@@ -12,4 +12,7 @@ export interface ActiveQuest {
 
   completed: boolean;
   rewardsClaimed: boolean;
+
+  imageUrl : string;
+  title:string
 }

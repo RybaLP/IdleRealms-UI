@@ -45,3 +45,14 @@ export interface HeroProfile {
     equippedGloves: Item | null;
     equippedBoots: Item | null;
 }
+
+export interface HeroFinalStatsDto {
+  totalStrength: number;
+  totalDexterity: number;
+  totalIntelligence: number;
+  totalConstitution: number;
+  totalLuck: number;
+  totalArmor: number;
+  maxHp: number;
+  level: number;
+}

@@ -24,6 +24,10 @@ export const useGetHeroInfo = () => {
     loading,
     error,
     isLoaded: !!data,
-    nickname: data?.nickname || "Nieznany",
+    nickname: data?.nickname || "Unknown",
+    gold : data?.gold || 0,
+    experience : data?.experience || 0,
+    level : data?.experience,
+    visualConfig : data?.visualConfig || "0;0;0;0;0",
   };
 };

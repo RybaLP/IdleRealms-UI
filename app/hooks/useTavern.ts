@@ -8,7 +8,7 @@ export const useTavern = () => {
     isLoading, 
     isError, 
     error,
-    refetch 
+    refetch,
   } = useQuery({
     queryKey: ["tavern-status"],
     queryFn: () => tavernService.getTavernStatus(),
