@@ -30,3 +30,20 @@ export interface PVEbattleResult {
   earnedGold: number;
 }
 
+export interface BattleParticipant {
+  name: string;
+  imageUrl: string;
+  weaponUrl?: string | null;
+  level: number;
+  maxHp: number;
+  currentHp: number;
+  
+  stats: {
+    str: number;
+    dex: number;
+    int: number;
+    con: number;
+    luck: number;
+    armor: number;
+  };
+}
