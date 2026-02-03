@@ -1,18 +1,4 @@
-export interface Item {
-    id: number;
-    name: string;
-    imageUrl: string;
-    itemType: string;
-    heroClass: string;
-    power: number;
-    strengthBonus: number;
-    dexterityBonus: number;
-    intelligenceBonus: number;
-    constitutionBonus: number;
-    luckBonus: number;
-    price: number;
-    requiredLevel: number;
-}
+import { Item } from "../item/item";
 
 export interface HeroProfile {
     nickname: string;
