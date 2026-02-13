@@ -32,7 +32,15 @@ const heroSlice = createSlice({
   reducers: {
     logoutHero: (state) => {
       state.data = null;
+    },
+
+    updateHeroAfterPurchase: (state, action) => {
+      if (state.data) {
+        state.data.gold = action.payload.currentGold;
+        state.data.inventory = action.payload.updatedInventory;
+      }
     }
+
   },
   extraReducers: (builder) => {
     builder
@@ -50,5 +58,5 @@ const heroSlice = createSlice({
   },
 });
 
-export const { logoutHero } = heroSlice.actions;
+export const { logoutHero , updateHeroAfterPurchase} = heroSlice.actions;
 export default heroSlice.reducer;

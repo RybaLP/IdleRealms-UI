@@ -81,7 +81,7 @@ export const ShopItem = ({
                 e.stopPropagation();
                 onBuy(item.id);
               }}
-              className="px-6 py-3 bg-linear-to-r from-green-600 to-emerald-700 text-white font-bold rounded-lg hover:from-green-700 hover:to-emerald-800 transition-all transform hover:scale-105 active:scale-95 shadow-lg"
+              className="hover:cursor-pointer px-6 py-3 bg-linear-to-r from-green-600 to-emerald-700 text-white font-bold rounded-lg hover:from-green-700 hover:to-emerald-800 transition-all transform hover:scale-105 active:scale-95 shadow-lg"
             >
               BUY
             </button>

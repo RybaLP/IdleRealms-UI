@@ -18,3 +18,9 @@ export interface ShopItemsResponse {
     items : Item [],
     LocalDateTime : string
 }
+
+export interface PurchaseItemResponse {
+    updatedInventory : Item [],
+    updatedShopItems : Item [],
+    currentGold : number
+}

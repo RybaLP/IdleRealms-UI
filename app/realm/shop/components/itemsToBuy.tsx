@@ -3,11 +3,17 @@ import { Item } from "@/app/types/item/item";
 import { useGetShopItems } from '@/app/hooks/useGetShopItems';
 import { ShopItem } from "./shopItem";
 import { useState } from "react";
+import { usePurchaseItem } from "@/app/hooks/usePurchaseItem";
+import { useDispatch } from "react-redux";
+import { updateHeroAfterPurchase } from "@/app/store/heroSlice";
 
 
 const ItemsToBuy = () => {
   const { data, isLoading, isError } = useGetShopItems();
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  
+  const {mutate : purchaseItem, isPending} = usePurchaseItem();
+  const dispatch = useDispatch();
 
   const handleItemSelect = (item : Item) => {
     if (selectedItem?.id == null) {
@@ -21,10 +27,18 @@ const ItemsToBuy = () => {
     setSelectedItem(null);
   };
 
-  // TODO
-  // COMPLETE HANDLE BUY FUNCTION
   const handleBuy = (itemId: number) => {
-    console.log('Buying item:', itemId);
+    if (itemId == null) return;
+
+    purchaseItem(itemId, {
+      onSuccess: (data) => {
+        dispatch(updateHeroAfterPurchase(data));
+      },
+      onError: (error) => {
+        alert(error.message);
+      }
+    });
+
   };
 
   if (isLoading) return <div className="text-amber-500 animate-pulse p-10 text-center">Opening Shop...</div>;
@@ -38,7 +52,7 @@ const ItemsToBuy = () => {
       <div className="grid grid-cols-3 gap-8" onClick={(e) => e.stopPropagation()} >
         {shopItems.length > 0 ? (
           shopItems.map((item: Item) => (
-            <div onClick={() => setSelectedItem(item)}>
+            <div key={item.id} onClick={() => setSelectedItem(item)}>
               <ShopItem 
                 key={item.id} 
                 item={item} 
