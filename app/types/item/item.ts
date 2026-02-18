@@ -24,3 +24,9 @@ export interface PurchaseItemResponse {
     updatedShopItems : Item [],
     currentGold : number
 }
+
+
+export interface SwitchItemRequest {
+  itemId: number;
+  action: 'EQUIP' | 'TAKE_OFF';
+}
