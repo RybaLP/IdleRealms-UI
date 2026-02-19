@@ -13,5 +13,4 @@ export const useGetShopItems = () => {
         staleTime: 1000 * 60 * 10
     });
     return {data, isLoading, isError};
-    
 }

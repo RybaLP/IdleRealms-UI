@@ -1,33 +1,23 @@
-"use client";
+import { useQuery } from "@tanstack/react-query";
+import { heroService } from "../services/heroService"; 
 
-import { useEffect, useRef } from 'react';
-import { fetchHeroData } from '../store/heroSlice';
-import { useAppDispatch, useAppSelector } from '../redux/reduxStore';
-
-export const useGetHeroInfo = () => {
-  const dispatch = useAppDispatch();
-  const { data, loading, error } = useAppSelector((state) => state.hero);
-  
-  const hasCalled = useRef(false);
-
-  useEffect(() => {
-    if (hasCalled.current) return;
-
-    if (!data && !loading) {
-      hasCalled.current = true; 
-      dispatch(fetchHeroData());
-    }
-  }, [dispatch, data, loading]);
+export const useHeroInfo = () => {
+ const { data, isLoading, error, ...queryProps } = useQuery({
+    queryKey: ['heroProfile'],
+    queryFn: () => heroService.getMyHero(), 
+    staleTime: 1000 * 60 * 5, 
+  });
 
   return {
+    ...queryProps, 
     hero: data,
-    loading,
+    isLoading,
     error,
     isLoaded: !!data,
     nickname: data?.nickname || "Unknown",
-    gold : data?.gold || 0,
-    experience : data?.experience || 0,
-    level : data?.experience,
-    visualConfig : data?.visualConfig || "0;0;0;0;0",
+    gold: data?.gold || 0,
+    experience: data?.experience || 0,
+    level: data?.level || 1, 
+    visualConfig: data?.visualConfig || "0;0;0;0;0",
   };
 };

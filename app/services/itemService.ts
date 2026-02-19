@@ -22,5 +22,22 @@ export const itemService = {
         }
 
         return await response.json();
+    },
+
+    async sellItem (itemId : number) {
+        const response = await fetch(apiUrl + `/api/item/sell/${itemId}` , {
+            method : "DELETE",
+            credentials : "include",
+            headers : {
+                "Content-Type" : "application/json"
+            }
+        })
+        
+        if (!response.ok) {
+             const errorData = await response.json().catch(() => ({}));
+             throw new Error(errorData.message || `Server error: ${response.status}`);
+        }
+
+        return await response.json();
     }
 }

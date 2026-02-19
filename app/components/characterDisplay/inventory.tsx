@@ -4,8 +4,7 @@ import { Item } from "@/app/types/item/item";
 import { ItemSlot } from "./itemSlot";
 import { useState, useRef, useEffect } from "react";
 import { useSwitchItem } from "@/app/hooks/useSwitchItem";
-import { useAppDispatch } from "@/app/redux/reduxStore";
-import { fetchHeroData } from "@/app/store/heroSlice";
+import { useSellItem } from "@/app/hooks/useSellItem";
 
 
 interface InventoryProps {
@@ -13,16 +12,17 @@ interface InventoryProps {
 }
 
 const Inventory = ({ inventory }: InventoryProps) => {
+  // ui
   const MAX_SLOTS = 5;
-
-  const dispatch = useAppDispatch();
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
+  const slotRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
+  // tanstack hooks
+  const {mutate: sellItem, isPending, isError} = useSellItem();
   const switchItemMutation = useSwitchItem();
 
-  const tooltipRef = useRef<HTMLDivElement | null>(null);
-  const slotRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const handleSlotClick = (item: Item | null) => {
     if (!item) return;
@@ -37,17 +37,16 @@ const Inventory = ({ inventory }: InventoryProps) => {
     },
     {
       onSuccess: () => {
-        dispatch(fetchHeroData());
+        setSelectedItem(null);
       },
     }
   );
 
-  setSelectedItem(null);
 };
 
   const handleSell = (itemId: number) => {
-    console.log("Sell item", itemId);
-    setSelectedItem(null);
+    if (isPending) return; 
+    sellItem(itemId);
   };
 
   const displaySlots: (Item | null)[] = [
@@ -185,7 +184,7 @@ const Inventory = ({ inventory }: InventoryProps) => {
               }
               className="flex-1 px-4 py-2 bg-linear-to-r from-red-600 to-rose-700 text-white font-bold rounded-lg hover:from-red-700 hover:to-rose-800 transition-all transform hover:scale-105 active:scale-95 shadow-lg"
             >
-              SELL
+              {isPending ? "Selling..." : "Sell Item"}
             </button>
           </div>
         </div>

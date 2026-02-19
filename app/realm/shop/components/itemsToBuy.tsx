@@ -4,8 +4,6 @@ import { useGetShopItems } from '@/app/hooks/useGetShopItems';
 import { ShopItem } from "./shopItem";
 import { useState } from "react";
 import { usePurchaseItem } from "@/app/hooks/usePurchaseItem";
-import { useDispatch } from "react-redux";
-import { updateHeroAfterPurchase } from "@/app/store/heroSlice";
 
 
 const ItemsToBuy = () => {
@@ -13,7 +11,6 @@ const ItemsToBuy = () => {
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   
   const {mutate : purchaseItem, isPending} = usePurchaseItem();
-  const dispatch = useDispatch();
 
   const handleItemSelect = (item : Item) => {
     if (selectedItem?.id == null) {
@@ -28,18 +25,9 @@ const ItemsToBuy = () => {
   };
 
   const handleBuy = (itemId: number) => {
-    if (itemId == null) return;
-
-    purchaseItem(itemId, {
-      onSuccess: (data) => {
-        dispatch(updateHeroAfterPurchase(data));
-      },
-      onError: (error) => {
-        alert(error.message);
-      }
-    });
-
-  };
+  if (itemId == null || isPending) return; 
+  purchaseItem(itemId);
+};
 
   if (isLoading) return <div className="text-amber-500 animate-pulse p-10 text-center">Opening Shop...</div>;
   if (isError || !data) return <div className="text-red-500 p-10 text-center">Shop is closed (Server Error)</div>;

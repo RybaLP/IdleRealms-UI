@@ -18,6 +18,8 @@ export const usePurchaseItem = () => {
                 };
             });
 
+            queryClient.invalidateQueries({queryKey : ["heroProfile"]});
+
         },
         onError: (error: any) => {
             console.error("Purchase error:", error.message);

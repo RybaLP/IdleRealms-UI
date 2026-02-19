@@ -30,6 +30,9 @@ export const shopService = {
             const res = await fetch(apiUrl + "/api/shop/buy" , {
                 method : "POST",
                 credentials : "include",
+                headers : {
+                    "Content-Type" : "application/json"
+                },
                 body : JSON.stringify({
                     itemId : itemId
                 })

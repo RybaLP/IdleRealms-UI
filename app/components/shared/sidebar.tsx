@@ -2,17 +2,17 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useGetHeroInfo } from "@/app/hooks/useGetHeroInfo";
 import { logoutUser } from "@/app/services/authService"; 
 import { useAppDispatch } from "@/app/redux/reduxStore";
 import { logoutHero } from "@/app/store/heroSlice";
+import { useHeroInfo } from "@/app/hooks/useGetHeroInfo";
 
 const Sidebar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useAppDispatch();
   
-  const { gold, loading } = useGetHeroInfo();
+  const { gold, isLoading } = useHeroInfo();
 
   const handleLogout = async () => {
     try {
@@ -48,7 +48,7 @@ const Sidebar = () => {
         <div className="bg-black/60 border border-amber-900/50 p-3 rounded flex items-center justify-between shadow-inner">
           <div className="flex items-center gap-2">
             <span className="text-yellow-400 font-mono font-bold text-lg">
-              {loading ? "..." : gold.toLocaleString()}
+              {isLoading ? "..." : gold.toLocaleString()}
             </span>
             <span className="text-yellow-500 animate-pulse">💰</span>
           </div>

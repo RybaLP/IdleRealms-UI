@@ -5,17 +5,18 @@ import { Quest } from "@/app/types/quest/quest";
 import { useEffect, useState } from "react";
 import { tavernService } from "@/app/services/tavernService";
 import { useQueryClient } from "@tanstack/react-query";
-import { useGetHeroInfo } from "@/app/hooks/useGetHeroInfo";
+import { useHeroInfo } from "@/app/hooks/useGetHeroInfo";
 
 interface Props {
   onClose: () => void;
 }
 
 const QuestSelectionWindow = ({ onClose }: Props) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const queryClient = useQueryClient();
   const { status, isLoading } = useTavern();
   const [selectedQuest, setSelectedQuest] = useState<Quest | null>(null);
-  const stamina = useGetHeroInfo().hero?.energy;
+  const stamina = useHeroInfo().hero?.energy;
 
   useEffect(() => {
     if (status?.avalibleQuestOffers?.length && !selectedQuest) {
@@ -35,9 +36,20 @@ const QuestSelectionWindow = ({ onClose }: Props) => {
     if (selectedQuest == null) {
       throw new Error("Mission must be selected!");
     }
-    await tavernService.selectMission(selectedQuest);
-    await queryClient.invalidateQueries({ queryKey: ["tavern-status"] });
-    onClose();
+
+    try {
+      setIsSubmitting(true);
+      await tavernService.selectMission(selectedQuest);
+      await queryClient.invalidateQueries({ queryKey: ["tavern-status"] });
+      await queryClient.invalidateQueries({ queryKey: ["heroProfile"] });
+
+      onClose();
+    } catch (error) {
+      console.error("Failed to start quest", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+
   };
 
   return (
