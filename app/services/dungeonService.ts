@@ -19,6 +19,24 @@ export const dungeonService = {
         }
 
         return res.json();
+    },
+
+    async fightDungeonMonster (dungeonId : number) {
+        const res = await fetch(`${apiUrl}/api/dungeon/${dungeonId}/fight`, {
+            method : "POST",
+            credentials : "include",
+            headers : {
+                "Content-Type" : "application/json"
+            }
+        });
+
+        if (!res.ok) {
+             if (res.status === 403) throw new Error("Session expired or unauthorized");
+             throw new Error("Could not fetch dungeon data");
+        }
+
+        return res.json();
+
     }
 
 }

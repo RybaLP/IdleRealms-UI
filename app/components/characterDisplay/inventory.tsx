@@ -47,6 +47,7 @@ const Inventory = ({ inventory }: InventoryProps) => {
   const handleSell = (itemId: number) => {
     if (isPending) return; 
     sellItem(itemId);
+    setSelectedItem(null);
   };
 
   const displaySlots: (Item | null)[] = [
@@ -137,7 +138,9 @@ const Inventory = ({ inventory }: InventoryProps) => {
               ["Intelligence", selectedItem.intelligenceBonus],
               ["Constitution", selectedItem.constitutionBonus],
               ["Luck", selectedItem.luckBonus],
-            ].map(([label, value]) => (
+            ]
+            .filter(([_, value]) => (value as number) > 0)
+            .map(([label, value]) => (
               <div
                 key={label}
                 className="flex justify-between items-center"

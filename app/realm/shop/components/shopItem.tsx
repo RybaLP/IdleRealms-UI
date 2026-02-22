@@ -34,28 +34,28 @@ export const ShopItem = ({
             <div className="flex justify-between items-center">
               <span className="text-gray-300">Strength</span>
               <span className={`font-bold text-lg ${item.strengthBonus >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                {item.strengthBonus >= 0 ? '+' : ''}{item.strengthBonus}
+                {item.strengthBonus > 0 ? '+' : ''}{item.strengthBonus}
               </span>
             </div>
             
             <div className="flex justify-between items-center">
               <span className="text-gray-300">Dexterity</span>
               <span className={`font-bold text-lg ${item.dexterityBonus >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                {item.dexterityBonus >= 0 ? '+' : ''}{item.dexterityBonus}
+                {item.dexterityBonus > 0 ? '+' : ''}{item.dexterityBonus}
               </span>
             </div>
             
             <div className="flex justify-between items-center">
               <span className="text-gray-300">Intelligence</span>
               <span className={`font-bold text-lg ${item.intelligenceBonus >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                {item.intelligenceBonus >= 0 ? '+' : ''}{item.intelligenceBonus}
+                {item.intelligenceBonus > 0 ? '+' : ''}{item.intelligenceBonus}
               </span>
             </div>
             
             <div className="flex justify-between items-center">
               <span className="text-gray-300">Constitution</span>
               <span className={`font-bold text-lg ${item.constitutionBonus >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                {item.constitutionBonus >= 0 ? '+' : ''}{item.constitutionBonus}
+                {item.constitutionBonus > 0 ? '+' : ''}{item.constitutionBonus}
               </span>
             </div>
             

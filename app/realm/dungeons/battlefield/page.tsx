@@ -1,4 +1,5 @@
 import Image from "next/image"
+import BackButton from "../components/backButton"
 
 const Page = () => {
   return (
@@ -11,6 +12,9 @@ const Page = () => {
         sizes="100vw"
         className="object-cover"
       />
+
+    <BackButton/>
+
     </div>
   )
 }
