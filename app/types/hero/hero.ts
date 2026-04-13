@@ -8,6 +8,7 @@ export interface HeroProfile {
     gold: number;
     energy: number;
     visualConfig: string;
+    socialId : string;
     stats: {
         totalStrength: number;
         totalDexterity: number;
