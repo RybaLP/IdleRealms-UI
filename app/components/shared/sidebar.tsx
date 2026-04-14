@@ -29,6 +29,7 @@ const Sidebar = () => {
     { name: "Tavern", href: "/realm/tavern", icon: "🍺" },
     { name: "Shop", href: "/realm/shop", icon: "⚔️" },
     { name: "Dungeons", href: "/realm/dungeons", icon: "💀" },
+    {name : "Post", href : "/realm/post" , icon : "📧"}
   ];
 
   return (
