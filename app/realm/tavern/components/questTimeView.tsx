@@ -21,8 +21,14 @@ const QuestTimerView = ({ activeQuest, onFinished }: Props) => {
   const { secondsLeft, isDone, progressWidth } = useMemo(() => {
     if (!now) return { secondsLeft: 0, isDone: false, progressWidth: 0 };
 
-    const start = new Date(activeQuest.startTime).getTime();
-    const end = new Date(activeQuest.finishTime).getTime();
+    const parseAsUTC = (dateStr: string) => {
+      if (!dateStr) return 0;
+      const isoStr = dateStr.endsWith("Z") ? dateStr : `${dateStr}Z`;
+      return new Date(isoStr).getTime();
+    };
+
+    const start = parseAsUTC(activeQuest.startTime);
+    const end = parseAsUTC(activeQuest.finishTime);
     const current = now.getTime();
 
     const total = end - start;
